@@ -31,5 +31,5 @@ function draw() {
         yoff += 0.01;
     }
     updatePixels();
-    time += 0.1;
+    time += 0.02;
 }
