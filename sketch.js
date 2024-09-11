@@ -1,14 +1,24 @@
+let width = 600;
+let height = 600;
+let graph_speed = 0.010;
+
 var xoff = 0;
-var yoff = 1000;
+
 function setup() {
-  createCanvas(600, 600);
+  createCanvas(width, height);
 }
 
 function draw() {
     background(51);
-    var x = map(noise(xoff), 0, 1, 0, width);
-    var y = map(noise(yoff), 0, 1, 0, height);
-    xoff += 0.01;
-    yoff += 0.01;
-    ellipse(x, y, 24, 24);
+    stroke(255);
+    noFill();
+    beginShape();
+    for (var x = 0; x < width; x++) {
+        var y = noise(xoff)*width;
+        ellipse(x, y, 5, 5);
+        xoff += 0.01;
+    }
+    xoff += graph_speed - (width*0.01); // adjust for the next frame
+    endShape();
+    
 }
