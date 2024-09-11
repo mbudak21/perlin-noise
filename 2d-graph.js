@@ -1,11 +1,11 @@
 let side = 600;
 let time = 0;
 
+const noise = openSimplexNoise();
 
 function setup() {
-  createCanvas(side, side);
-  pixelDensity(1);
-  
+    createCanvas(side, side);
+    pixelDensity(1);  
 }
 
 function draw() {
@@ -20,7 +20,8 @@ function draw() {
     for (var y = 0; y < side; y++) {
         for (var x = 0; x < side; x++) {
             var index = (x + y * side) * 4;
-            var bright = noise(xoff*inc, yoff*inc, time)*255;
+            var val = noise.noise3D(xoff*inc, yoff*inc, time);
+            var bright = (val + 0.2)*255;
             pixels[index + 0] = bright;
             pixels[index + 1] = bright;
             pixels[index + 2] = bright;
