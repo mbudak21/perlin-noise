@@ -27,8 +27,8 @@ function draw() {
     grid.updateVectors();
     //background(51);
     for (let i = 0; i < particle_count; i++) {
-        particles[i].ensureEdges();
         let force = grid.getVectorAt(particles[i].pos.x, particles[i].pos.y);
+        particles[i].ensureEdges();
         particles[i].applyForce(force);
         particles[i].update();
         particles[i].draw(particleColor);
@@ -36,6 +36,6 @@ function draw() {
     hue = (hue + 0.1) % 360; // Slowly change the hue
     particleColor = color(hue, 65, 65, 3); // Update the color
     //grid.drawVectors();
-    noLoop();
+    //noLoop();
     fr.html(floor(frameRate()));
 }
