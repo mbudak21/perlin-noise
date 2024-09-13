@@ -2,6 +2,9 @@
 
 This project visualizes flow fields using p5.js. It includes 1D and 2D graph visualizations and a flow field simulation.
 
+![flow-field.js](flow_field.png)
+
+
 ## Project Structure
 ### Files and Directories
 
