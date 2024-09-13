@@ -1,7 +1,7 @@
 let side = 600;
 let grid_size = 20;
 let grid;
-let particle_count = 2000;
+let particle_count = 500;
 let particles = [];
 let fr;
 
@@ -10,7 +10,7 @@ let particleColor;
 
 function setup() {
     createCanvas(side, side);
-    background(30);
+    background(51);
     fr = createP(''); // Frame rate
 
     colorMode(HSB, 360, 100, 100, 100);
@@ -25,6 +25,7 @@ function setup() {
 
 function draw() {
     grid.updateVectors();
+    //background(51);
     for (let i = 0; i < particle_count; i++) {
         particles[i].ensureEdges();
         let force = grid.getVectorAt(particles[i].pos.x, particles[i].pos.y);
@@ -32,9 +33,9 @@ function draw() {
         particles[i].update();
         particles[i].draw(particleColor);
     }
-    hue = (hue + 0.5) % 360; // Slowly change the hue
-    particleColor = color(hue, 100, 100, 15); // Update the color
+    hue = (hue + 0.1) % 360; // Slowly change the hue
+    particleColor = color(hue, 65, 65, 3); // Update the color
     //grid.drawVectors();
-    //noLoop();
+    noLoop();
     fr.html(floor(frameRate()));
 }

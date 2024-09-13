@@ -1,16 +1,22 @@
 class Particle {
-    
     constructor() {
         this.pos = createVector(random(width), random(height));
         this.vel = createVector(0, 0);
         this.acc = createVector(0, 0);
-        this.speedLimit = 4;
+        //this.speedLimit = 4;
+        this.frictionCoeff = 0.1;
         this.prevPos = this.pos.copy();
     }
     update() {
         this.prevPos = this.pos.copy();
+
+        let friction = this.vel.copy().mult(-1);
+        friction.mult(this.frictionCoeff);
+        this.applyForce(friction);
+        
         this.vel.add(this.acc);
-        this.vel.limit(this.speedLimit);
+        //this.vel.limit(this.speedLimit);
+
         this.pos.add(this.vel);
         this.acc.mult(0);
         this.ensureEdges();
@@ -24,10 +30,11 @@ class Particle {
     }
     draw(color) {
         stroke(color);
-        strokeWeight(1);
+        strokeWeight(2);
+        //point(this.pos.x, this.pos.y);
         // Get the line size
         let line_v = createVector(this.pos.x, this.pos.y).sub(this.prevPos);
-        if (line_v.mag() >= this.speedLimit) {
+        if (line_v.mag() >= 8) {
             point(this.pos.x, this.pos.y);
         }
         else{

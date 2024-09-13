@@ -4,7 +4,7 @@ class Grid {
         this.cols = cols;
         this.cellSize = cellSize;
         this.grid = [];
-        this.defVectorMagnitude = 1;
+        this.defVectorMagnitude = 0.5;
 
         // Noise stuff
         this.time = 0;
