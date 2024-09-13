@@ -4,12 +4,13 @@ class Grid {
         this.cols = cols;
         this.cellSize = cellSize;
         this.grid = [];
+        this.defVectorMagnitude = 1;
 
         // Noise stuff
         this.time = 0;
         this.noise_scale = 0.20;
-        this.time_noise_scale = 0.002;
-        let noise = openSimplexNoise();
+        this.time_noise_scale = 0.001;
+        let noise = openSimplexNoise(2);
         this.noise = noise.noise3D; // 2D noise function
 
         this.initFlowField();
@@ -19,7 +20,7 @@ class Grid {
             this.grid[i] = [];
             for (let j = 0; j < this.cols; j++) {
                 let v = p5.Vector.fromAngle(PI * this.noise(i*this.noise_scale, j*this.noise_scale, this.time));
-                v.setMag(20);
+                v.setMag(this.defVectorMagnitude);
                 this.grid[i][j] = v;
             }
         }
@@ -28,12 +29,25 @@ class Grid {
     updateVectors() {
         for (let i = 0; i < this.rows; i++) {
             for (let j = 0; j < this.cols; j++) {
-                let v = p5.Vector.fromAngle(PI * this.noise(i*this.noise_scale, j*this.noise_scale, this.time*this.time_noise_scale));
-                v.setMag(20);
+                let val = this.noise(i*this.noise_scale, j*this.noise_scale, this.time*this.time_noise_scale)
+                let v = p5.Vector.fromAngle(PI * val*2);
+                v.setMag(this.defVectorMagnitude);
                 this.grid[i][j] = v;
             }
         }
         this.time++;
+    } 
+
+    getVectorAt(x, y) {
+        let i = floor(x / this.cellSize);
+        let j = floor(y / this.cellSize);
+        //print("x: " + x + " y: " + y);
+        if ((i >= this.rows) || (j >= this.cols)) {
+            print("Error: Out of bounds");
+            print("i: " + i + " j: " + j);
+            
+        }
+        return this.grid[i][j];
     }
 
 
@@ -54,6 +68,7 @@ class Grid {
     drawArrow(x, y, vec, color) {
         let stroke_weight = 2;
         let arrowSize = 4;
+        vec = vec.copy().mult(15/this.defVectorMagnitude);
 
         push();
         stroke(color);
